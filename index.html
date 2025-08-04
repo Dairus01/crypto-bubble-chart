@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoBubbles - Live Market Visualization</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <div class="logo">
+                    <span class="logo-icon">💎</span>
+                    <span class="logo-text">CryptoBubbles</span>
+                </div>
+                <div class="nav-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Market Cap</span>
+                        <span class="stat-value" id="globalMarketCap">$0.00T</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">24h Volume</span>
+                        <span class="stat-value" id="globalVolume">$0.00B</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">BTC Dominance</span>
+                        <span class="stat-value" id="btcDominance">0.00%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="data-source" id="dataSource">🔄 Loading...</div>
+                <button class="refresh-btn" id="refreshBtn">🔄</button>
+        </div>
+        </nav>
+
+        <!-- Main Layout Container -->
+        <div class="main-layout">
+            <!-- Left Sidebar - Filters -->
+            <div class="sidebar">
+                <div class="filter-section">
+                    <h3>Filters</h3>
+                    <div class="filter-group">
+                        <label>Sort By</label>
+                        <select id="sortBy" class="filter-select">
+                        <option value="market_cap">Market Cap</option>
+                        <option value="volume">Volume</option>
+                            <option value="price_change">Price Change</option>
+                        <option value="name">Name</option>
+                    </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Min Market Cap</label>
+                        <input type="range" id="minMarketCap" min="0" max="1000" value="0" class="filter-slider">
+                        <span class="slider-value" id="minMarketCapValue">$0B</span>
+                    </div>
+                    <div class="filter-group">
+                        <label>Max Tokens</label>
+                        <input type="range" id="maxBubbles" min="10" max="200" value="200" class="filter-slider">
+                        <span class="slider-value" id="maxBubblesValue">200</span>
+                    </div>
+                    <div class="filter-group">
+                        <label>Time Period</label>
+                        <select id="timePeriod" class="filter-select">
+                            <option value="1h">1 Hour</option>
+                            <option value="4h">4 Hours</option>
+                            <option value="24h" selected>24 Hours</option>
+                            <option value="7d">7 Days</option>
+                            <option value="30d">30 Days</option>
+                            <option value="1y">1 Year</option>
+                            <option value="max">All Time</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <h3>Auto Refresh</h3>
+                    <div class="filter-group">
+                        <select id="autoRefresh" class="filter-select">
+                            <option value="0">Off</option>
+                            <option value="30">30s</option>
+                            <option value="60">1min</option>
+                            <option value="300">5min</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3>View Options</h3>
+                    <div class="filter-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showLabels" checked>
+                            <span>Show Labels</span>
+                        </label>
+                    </div>
+                    <div class="filter-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showImages" checked>
+                            <span>Show Icons</span>
+                        </label>
+                    </div>
+                    <div class="filter-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="enableDrag" checked>
+                            <span>Draggable Bubbles</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Content Area -->
+            <div class="center-content">
+                <!-- Main Chart -->
+                <div class="main-chart">
+                    <div id="chart"></div>
+                    <div id="tooltip" class="tooltip"></div>
+                    
+                    <!-- Chart Overlay Controls -->
+                    <div class="chart-overlay">
+                        <div class="overlay-controls">
+                            <button class="overlay-btn" id="fullscreen">⛶</button>
+                </div>
+            </div>
+        </div>
+
+                <!-- AI Agent Section - Only Under Chart -->
+                <div class="ai-agent-section">
+                    <div class="ai-agent-header">
+                        <h3>🤖 Crypto AI Assistant</h3>
+                        <p>Ask me anything about the cryptocurrency market, trends, or specific tokens!</p>
+                    </div>
+                    <div class="ai-agent">
+                        <div class="chat-container">
+                            <div class="chat-messages" id="chatMessages">
+                                <div class="message ai-message">
+                                    <div class="message-avatar">🤖</div>
+                                    <div class="message-content">
+                                        <div class="message-text">
+                                            Hello there! 👋 I'm your Crypto AI Assistant! I can help you analyze market trends, explain cryptocurrency concepts, and provide insights about the data you're viewing. What would you like to know?
+                                        </div>
+                                        <div class="message-time">Just now</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-input-container">
+                                <input type="text" id="chatInput" class="chat-input" placeholder="Ask me about crypto markets, trends, or concepts..." maxlength="500">
+                                <button id="sendBtn" class="send-btn">➤</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+            <!-- Right Sidebar - Details -->
+            <div class="details-sidebar">
+                <div class="details-section">
+                    <h3>Market Overview</h3>
+                    <div class="market-stats">
+            <div class="stat-card">
+                            <div class="stat-icon">📊</div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="totalMarketCap">$0.00T</div>
+                <div class="stat-label">Total Market Cap</div>
+                            </div>
+            </div>
+            <div class="stat-card">
+                            <div class="stat-icon">💹</div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="totalVolume">$0.00B</div>
+                                <div class="stat-label">24h Volume</div>
+                            </div>
+            </div>
+            <div class="stat-card">
+                            <div class="stat-icon">📈</div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="avgChange">0.00%</div>
+                                <div class="stat-label">Avg Change</div>
+                            </div>
+            </div>
+            <div class="stat-card">
+                            <div class="stat-icon">🎯</div>
+                            <div class="stat-content">
+                <div class="stat-value" id="bubbleCount">0</div>
+                                <div class="stat-label">Active Tokens</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <h3>Selected Token</h3>
+                    <div id="selectedToken" class="selected-token">
+                        <div class="token-placeholder">Click on a bubble to see details</div>
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <h3>Market Movers</h3>
+                    <div id="topMovers" class="top-movers">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
