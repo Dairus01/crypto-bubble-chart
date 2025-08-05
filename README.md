@@ -98,4 +98,4 @@ If you encounter any issues:
 
 ---
 
-**Live Demo**: [Your deployed URL here]
+**Live Demo**: https://crypto-bubble-chart.vercel.app/
