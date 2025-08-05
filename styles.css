@@ -301,6 +301,44 @@ body {
     accent-color: #2563eb;
 }
 
+/* Credit Section */
+.credit-section {
+    margin-top: auto;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.credit-content {
+    text-align: center;
+}
+
+.credit-text {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.credit-text strong {
+    color: #fff;
+    font-weight: 600;
+}
+
+.credit-link {
+    font-size: 12px;
+    margin: 0;
+}
+
+.credit-link a {
+    color: #4a9eff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.credit-link a:hover {
+    color: #66b3ff;
+    text-decoration: underline;
+}
+
 /* Main Chart */
 .main-chart {
     flex: 1;

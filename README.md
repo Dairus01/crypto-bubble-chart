@@ -39,73 +39,6 @@ A real-time cryptocurrency bubble chart visualization built with D3.js and the C
 3. **Open your browser:**
    Navigate to `http://localhost:8000`
 
-## Deployment Options
-
-### Option 1: GitHub Pages (Recommended - Free)
-
-1. **Create a GitHub repository:**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git branch -M main
-   git remote add origin https://github.com/yourusername/crypto-bubble-chart.git
-   git push -u origin main
-   ```
-
-2. **Enable GitHub Pages:**
-   - Go to your repository on GitHub
-   - Click "Settings" → "Pages"
-   - Select "Deploy from a branch"
-   - Choose "main" branch and "/ (root)" folder
-   - Click "Save"
-
-3. **Your site will be live at:**
-   `https://yourusername.github.io/crypto-bubble-chart`
-
-### Option 2: Netlify (Free)
-
-1. **Drag & Drop Method:**
-   - Go to [netlify.com](https://netlify.com)
-   - Sign up/Login
-   - Drag your project folder to the deploy area
-   - Your site is instantly live!
-
-2. **Git Integration:**
-   - Connect your GitHub repository
-   - Netlify will auto-deploy on every push
-
-### Option 3: Vercel (Free)
-
-1. **Install Vercel CLI:**
-   ```bash
-   npm i -g vercel
-   ```
-
-2. **Deploy:**
-   ```bash
-   vercel
-   ```
-
-3. **Follow the prompts** and your site will be live!
-
-### Option 4: Firebase Hosting (Free)
-
-1. **Install Firebase CLI:**
-   ```bash
-   npm install -g firebase-tools
-   ```
-
-2. **Initialize Firebase:**
-   ```bash
-   firebase login
-   firebase init hosting
-   ```
-
-3. **Deploy:**
-   ```bash
-   firebase deploy
-   ```
 
 ## Configuration
 
@@ -130,7 +63,6 @@ crypto-bubble-chart/
 ├── demo-data.js        # Sample data for fallback
 ├── package.json        # Project metadata
 ├── README.md           # This file
-└── DEPLOYMENT.md       # Detailed deployment guide
 ```
 
 ## Browser Support
@@ -167,4 +99,3 @@ If you encounter any issues:
 ---
 
 **Live Demo**: [Your deployed URL here]
-**GitHub**: [Your repository URL here] 
