@@ -25,7 +25,7 @@ A real-time cryptocurrency bubble chart visualization built with D3.js and the C
 
 1. **Clone the repository:**
    ```bash
-   git clone <your-repo-url>
+   git clone <https://github.com/Dairus01/crypto-bubble-chart.git>
    cd crypto-bubble-chart
    ```
 
