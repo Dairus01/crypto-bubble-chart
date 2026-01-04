@@ -1,6 +1,6 @@
 # Crypto Bubble Chart
 
-A real-time cryptocurrency bubble chart visualization built with D3.js and the CoinGecko API. Features interactive bubbles, market data, and an AI assistant.
+A real-time interactive cryptocurrency bubble chart visualization built with D3.js and the CoinGecko API. Features interactive bubbles, market data, and an AI assistant.
 
 ## Features
 
